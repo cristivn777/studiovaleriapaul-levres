@@ -104,6 +104,38 @@
   .gal-item::after{content:"";position:absolute;inset:0;
     background:linear-gradient(to top,rgba(21,17,14,.6),transparent 55%)}
 
+  /* GALERIE MASONRY (sans texte) */
+  .mgal{column-count:4;column-gap:14px}
+  .mphoto{display:block;width:100%;margin:0 0 14px;border-radius:14px;overflow:hidden;
+    break-inside:avoid;cursor:zoom-in;position:relative;border:none;padding:0;background:none}
+  .mphoto img{width:100%;display:block;transition:transform .55s ease}
+  .mphoto::after{content:"";position:absolute;inset:0;background:rgba(21,17,14,0);transition:background .3s}
+  .mphoto:hover img{transform:scale(1.05)}
+  .mphoto:hover::after{background:rgba(21,17,14,.14)}
+  .mphoto .zoom{position:absolute;top:12px;right:12px;z-index:2;width:36px;height:36px;border-radius:50%;
+    background:rgba(255,255,255,.92);color:var(--noir);display:flex;align-items:center;justify-content:center;
+    opacity:0;transform:scale(.8);transition:.25s}
+  .mphoto .zoom .ico{width:18px;height:18px}
+  .mphoto:hover .zoom,.mphoto:focus-visible .zoom{opacity:1;transform:scale(1)}
+
+  /* LIGHTBOX */
+  .lb{position:fixed;inset:0;z-index:100;background:rgba(15,11,9,.95);display:none;
+    align-items:center;justify-content:center}
+  .lb.open{display:flex}
+  .lb img{max-width:90vw;max-height:84vh;border-radius:8px;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+  .lb__btn{position:absolute;background:rgba(255,255,255,.12);border:none;color:#fff;cursor:pointer;
+    width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.2s}
+  .lb__btn:hover{background:rgba(255,255,255,.26)}
+  .lb__btn .ico{width:26px;height:26px}
+  .lb__close{top:22px;right:22px}
+  .lb__prev{left:22px;top:50%;transform:translateY(-50%)}
+  .lb__next{right:22px;top:50%;transform:translateY(-50%)}
+  .lb__count{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+    color:#fff;font-size:.85rem;letter-spacing:.12em}
+  @media(max-width:1000px){.mgal{column-count:3}}
+  @media(max-width:680px){.mgal{column-count:2}}
+  @media(max-width:560px){.lb__btn{width:44px;height:44px}.lb__prev{left:8px}.lb__next{right:8px}}
+
   /* AVANT / APRÈS INTERACTIF */
   .ba{max-width:760px;margin:0 auto 56px;position:relative;border-radius:16px;overflow:hidden;
     aspect-ratio:4/3;box-shadow:0 26px 64px rgba(21,17,14,.18);
@@ -286,6 +318,8 @@
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-7 9-7 9s-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
   <symbol id="i-drag" viewBox="0 0 24 24"><path d="M9 7l-4 5 4 5M15 7l4 5-4 5"/></symbol>
+  <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4-4M11 8v6M8 11h6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
 </svg>
 
 <!-- ============ NAV ============ -->
@@ -366,11 +400,15 @@
     </div>
     <p class="ba__hint"><svg class="ico"><use href="#i-drag"/></svg> Glissez pour comparer le résultat</p>
 
-    <div class="gal-grid">
-      <div class="gal-item"><img src="assets/img/natural.jpg" alt="Lèvres naturelles effet bonne mine"><span>Naturel · effet bonne mine</span></div>
-      <div class="gal-item"><img src="assets/img/g2.jpg" alt="Lèvres lumineuses contour redessiné"><span>Couleur ravivée</span></div>
-      <div class="gal-item"><img src="assets/img/g1.jpg" alt="Lèvres pulpeuses brillantes"><span>Volume &amp; éclat</span></div>
-      <div class="gal-item"><img src="assets/img/glamour.jpg" alt="Lèvres effet glamour"><span>Glamour 3D</span></div>
+    <div class="mgal" id="mgal">
+      <button class="mphoto" type="button"><img src="assets/img/gallery/01.jpg" alt="Résultat maquillage semi-permanent des lèvres" loading="lazy"><span class="zoom"><svg class="ico"><use href="#i-zoom"/></svg></span></button>
+      <button class="mphoto" type="button"><img src="assets/img/gallery/02.jpg" alt="Avant / après lip blush" loading="lazy"><span class="zoom"><svg class="ico"><use href="#i-zoom"/></svg></span></button>
+      <button class="mphoto" type="button"><img src="assets/img/gallery/03.jpg" alt="Lèvres pulpeuses et lumineuses" loading="lazy"><span class="zoom"><svg class="ico"><use href="#i-zoom"/></svg></span></button>
+      <button class="mphoto" type="button"><img src="assets/img/gallery/04.jpg" alt="Avant / après maquillage des lèvres" loading="lazy"><span class="zoom"><svg class="ico"><use href="#i-zoom"/></svg></span></button>
+      <button class="mphoto" type="button"><img src="assets/img/gallery/05.jpg" alt="Résultat naturel des lèvres" loading="lazy"><span class="zoom"><svg class="ico"><use href="#i-zoom"/></svg></span></button>
+      <button class="mphoto" type="button"><img src="assets/img/gallery/06.jpg" alt="Avant / après cicatrisé deux ans" loading="lazy"><span class="zoom"><svg class="ico"><use href="#i-zoom"/></svg></span></button>
+      <button class="mphoto" type="button"><img src="assets/img/gallery/07.jpg" alt="Sourire après lip blush" loading="lazy"><span class="zoom"><svg class="ico"><use href="#i-zoom"/></svg></span></button>
+      <button class="mphoto" type="button"><img src="assets/img/gallery/08.jpg" alt="Avant / après lèvres redessinées" loading="lazy"><span class="zoom"><svg class="ico"><use href="#i-zoom"/></svg></span></button>
     </div>
   </div>
 </section>
@@ -556,6 +594,15 @@
   </div>
 </section>
 
+<!-- LIGHTBOX GALERIE -->
+<div class="lb" id="lb" aria-hidden="true" role="dialog" aria-label="Visionneuse de la galerie">
+  <button class="lb__btn lb__close" id="lbClose" aria-label="Fermer"><svg class="ico"><use href="#i-close"/></svg></button>
+  <button class="lb__btn lb__prev" id="lbPrev" aria-label="Image précédente"><svg class="ico" style="transform:rotate(180deg)"><use href="#i-arrow"/></svg></button>
+  <img id="lbImg" src="" alt="" />
+  <button class="lb__btn lb__next" id="lbNext" aria-label="Image suivante"><svg class="ico"><use href="#i-arrow"/></svg></button>
+  <div class="lb__count" id="lbCount"></div>
+</div>
+
 <footer>
   <svg class="nav__logo"><use href="#brandLogo"/></svg>
   <p>Studio Valéria Paul — Maquillage semi-permanent des lèvres</p>
@@ -601,6 +648,39 @@
     console.log('Nouveau lead :',data);
     wrap.classList.add('sent');
     wrap.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+})();
+
+/* Galerie : lightbox interactif (clic, flèches, Échap, swipe) */
+(function(){
+  var mgal=document.getElementById('mgal'), lb=document.getElementById('lb');
+  if(!mgal||!lb) return;
+  var imgs=[].map.call(mgal.querySelectorAll('.mphoto img'),function(i){return {src:i.src,alt:i.alt};});
+  var lbImg=document.getElementById('lbImg'), lbCount=document.getElementById('lbCount');
+  var i=0;
+  function show(n){
+    i=(n+imgs.length)%imgs.length;
+    lbImg.src=imgs[i].src; lbImg.alt=imgs[i].alt;
+    lbCount.textContent=(i+1)+' / '+imgs.length;
+  }
+  function open(n){show(n);lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  function close(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  mgal.querySelectorAll('.mphoto').forEach(function(b,idx){b.addEventListener('click',function(){open(idx);});});
+  document.getElementById('lbClose').addEventListener('click',close);
+  document.getElementById('lbPrev').addEventListener('click',function(){show(i-1);});
+  document.getElementById('lbNext').addEventListener('click',function(){show(i+1);});
+  lb.addEventListener('click',function(e){if(e.target===lb)close();});
+  document.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')close();
+    if(e.key==='ArrowLeft')show(i-1);
+    if(e.key==='ArrowRight')show(i+1);
+  });
+  var x0=null;
+  lb.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  lb.addEventListener('touchend',function(e){
+    if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40){dx<0?show(i+1):show(i-1);} x0=null;
   });
 })();
 </script>
