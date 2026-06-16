@@ -195,6 +195,33 @@
   .rating-summary .stars .ico{width:22px;height:22px}
   .rating-summary .src{color:var(--gris);font-size:.9rem;margin-top:4px}
   .vline{width:1px;height:54px;background:var(--bord)}
+
+  /* Vidéo témoignage — mock-up iPhone */
+  .video-temoignage{display:flex;flex-direction:column;align-items:center;margin-bottom:50px}
+  .phone{position:relative;width:280px;max-width:78vw;aspect-ratio:9/19.5;background:#0e0b09;
+    border-radius:46px;padding:12px;box-shadow:0 30px 70px rgba(21,17,14,.28),0 0 0 2px #2a2421 inset}
+  .phone::before{content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);z-index:3;
+    width:96px;height:26px;background:#0e0b09;border-radius:0 0 16px 16px}
+  .phone::after{content:"";position:absolute;right:-3px;top:120px;width:3px;height:54px;
+    background:#2a2421;border-radius:2px}
+  .phone .screen{width:100%;height:100%;border-radius:34px;overflow:hidden;background:#000;position:relative}
+  .phone video{width:100%;height:100%;object-fit:cover;display:block}
+  .phone .sound{position:absolute;bottom:14px;right:14px;z-index:4;width:40px;height:40px;border-radius:50%;
+    border:none;cursor:pointer;background:rgba(0,0,0,.5);color:#fff;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+  .phone .sound .ico{width:20px;height:20px}
+  .video-temoignage .cap{margin-top:20px;color:var(--gris);font-size:.92rem;display:flex;align-items:center;gap:8px}
+  .video-temoignage .cap .ico{width:18px;height:18px;color:var(--terracotta)}
+
+  /* Avis scrollables (carrousel horizontal) */
+  .avis-scroll{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:6px 4px 22px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .avis-scroll::-webkit-scrollbar{height:6px}
+  .avis-scroll::-webkit-scrollbar-thumb{background:var(--rose);border-radius:6px}
+  .avis-scroll::-webkit-scrollbar-track{background:var(--bord);border-radius:6px}
+  .avis-scroll .avis{flex:0 0 340px;max-width:80vw;scroll-snap-align:start}
+  .avis-hint{text-align:center;color:var(--gris);font-size:.88rem;margin-top:6px;
+    display:flex;align-items:center;justify-content:center;gap:8px}
+  .avis-hint .ico{width:18px;height:18px;color:var(--terracotta)}
   .avis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   .avis{background:#fff;padding:30px 28px;border-radius:14px;box-shadow:0 10px 36px rgba(21,17,14,.05);
     display:flex;flex-direction:column}
@@ -320,6 +347,9 @@
   <symbol id="i-drag" viewBox="0 0 24 24"><path d="M9 7l-4 5 4 5M15 7l4 5-4 5"/></symbol>
   <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4-4M11 8v6M8 11h6"/></symbol>
   <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9h3l5-4v14l-5-4H4z"/><path d="M16 9l5 6M21 9l-5 6"/></symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9h3l5-4v14l-5-4H4z"/><path d="M16 8a5 5 0 0 1 0 8M18.5 6a8 8 0 0 1 0 12"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor" stroke="none"/></symbol>
 </svg>
 
 <!-- ============ NAV ============ -->
@@ -487,7 +517,22 @@
         <div class="src">Champion National du Maquillage Permanent 2024 &amp; 2025</div>
       </div>
     </div>
-    <div class="avis-grid">
+
+    <!-- Vidéo témoignage dans un mock-up iPhone -->
+    <div class="video-temoignage">
+      <div class="phone">
+        <div class="screen">
+          <video id="vTemo" playsinline muted loop autoplay preload="metadata" poster="assets/img/temoignage-poster.jpg">
+            <source src="assets/video/temoignage.webm" type="video/webm">
+            <source src="assets/video/temoignage.mp4" type="video/mp4">
+          </video>
+          <button class="sound" id="vSound" type="button" aria-label="Activer le son"><svg class="ico"><use href="#i-mute"/></svg></button>
+        </div>
+      </div>
+      <p class="cap"><svg class="ico"><use href="#i-play"/></svg> Témoignage en vidéo · touchez pour activer le son</p>
+    </div>
+
+    <div class="avis-scroll">
       <div class="avis"><span class="stars"><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg></span><svg class="ico quote"><use href="#i-quote"/></svg><p>Mes lèvres avaient perdu de leur couleur avec le temps. Le résultat est si naturel qu'on ne devine pas que c'est du maquillage permanent. Je gagne un temps fou le matin !</p><div class="who"><div class="av">C</div><div><b>Claire L.</b><small>Paris</small></div></div></div>
       <div class="avis"><span class="stars"><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg></span><svg class="ico quote"><use href="#i-quote"/></svg><p>J'avais peur que ce soit douloureux : finalement, presque rien. Le contour est parfaitement dessiné et la teinte correspond exactement à ce que je voulais.</p><div class="who"><div class="av">S</div><div><b>Sophie M.</b><small>Toulouse</small></div></div></div>
       <div class="avis"><span class="stars"><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg></span><svg class="ico quote"><use href="#i-quote"/></svg><p>Effet Glamour 3D adopté ! Mes lèvres paraissent plus pulpeuses, sans excès. Accueil chaleureux et conseils au top du début à la fin.</p><div class="who"><div class="av">I</div><div><b>Inès B.</b><small>Nice</small></div></div></div>
@@ -495,6 +540,7 @@
       <div class="avis"><span class="stars"><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg></span><svg class="ico quote"><use href="#i-quote"/></svg><p>Mes lèvres étaient asymétriques, c'est enfin équilibré et tout en finesse. On m'a accompagnée à chaque étape, je me suis sentie en confiance.</p><div class="who"><div class="av">L</div><div><b>Laura P.</b><small>Aix-en-Provence</small></div></div></div>
       <div class="avis"><span class="stars"><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg></span><svg class="ico quote"><use href="#i-quote"/></svg><p>La retouche a parfait le résultat. Teinte naturelle et lumineuse, exactement l'effet « bonne mine » que je cherchais. Bravo à toute l'équipe.</p><div class="who"><div class="av">N</div><div><b>Nadia R.</b><small>Cannes</small></div></div></div>
     </div>
+    <p class="avis-hint"><svg class="ico"><use href="#i-drag"/></svg> Glissez pour parcourir les avis</p>
   </div>
 </section>
 
@@ -681,6 +727,19 @@
   lb.addEventListener('touchend',function(e){
     if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;
     if(Math.abs(dx)>40){dx<0?show(i+1):show(i-1);} x0=null;
+  });
+})();
+
+/* Vidéo témoignage : activer / couper le son */
+(function(){
+  var v=document.getElementById('vTemo'), b=document.getElementById('vSound');
+  if(!v||!b) return;
+  var use=b.querySelector('use');
+  b.addEventListener('click',function(){
+    v.muted=!v.muted;
+    if(!v.muted){v.play();}
+    use.setAttribute('href',v.muted?'#i-mute':'#i-volume');
+    b.setAttribute('aria-label',v.muted?'Activer le son':'Couper le son');
   });
 })();
 </script>
