@@ -212,6 +212,29 @@
   .prix .contact a:hover{color:var(--rose)}
   .prix .contact .ico{width:18px;height:18px;color:var(--rose)}
 
+  /* FORMULAIRE LEADS */
+  .lead-form{max-width:640px;margin:34px auto 0;text-align:left;
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+    border-radius:18px;padding:34px;backdrop-filter:blur(6px)}
+  .lead-form .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.12em;
+    color:var(--rose);margin-bottom:7px;font-weight:600}
+  .field input,.field select,.field textarea{width:100%;padding:13px 15px;border-radius:10px;
+    border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.96);color:var(--noir);
+    font-family:inherit;font-size:.95rem}
+  .field textarea{resize:vertical;min-height:84px}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--rose)}
+  .lead-form .cta{width:100%;justify-content:center;margin-top:6px}
+  .form-consent{font-size:.78rem;color:#bcaea8;margin-top:14px;text-align:center}
+  .form-ok{display:none;text-align:center;padding:30px 10px}
+  .form-ok .ico{width:54px;height:54px;color:var(--rose);margin-bottom:14px}
+  .form-ok h3{color:#fff;font-size:1.5rem;margin-bottom:8px}
+  .form-ok p{color:#d4c7c1}
+  .lead-form.sent form{display:none}
+  .lead-form.sent .form-ok{display:block}
+  @media(max-width:560px){.lead-form .row{grid-template-columns:1fr}.lead-form{padding:26px 20px}}
+
   footer{background:#0e0b09;color:#9c908a;text-align:center;padding:44px 24px;font-size:.85rem}
   footer .nav__logo{width:60px;height:60px;margin:0 auto 18px;display:block}
 
@@ -289,7 +312,7 @@
           <small><strong>4,9/5</strong> · plus de 1 200 avis clientes · Champion National 2024 &amp; 2025</small>
         </div>
       </div>
-      <div class="hero__img"><img src="assets/img/hero.jpg" alt="Lèvres naturelles sublimées par un maquillage semi-permanent lip blush" /></div>
+      <div class="hero__img"><img src="assets/img/hero.jpg" alt="Cliente au sourire naturel après un maquillage semi-permanent des lèvres lip blush" /></div>
     </div>
   </div>
 </section>
@@ -482,11 +505,59 @@
     <p class="eyebrow">Tarif</p>
     <h2>Sublimez vos lèvres</h2>
     <div class="montant">Dès 250 €</div>
-    <p class="d">Réservez votre consultation pour définir ensemble la teinte et la forme idéales.</p>
-    <a href="#consultation" class="cta cta--light">Programmer votre consultation <svg class="ico"><use href="#i-arrow"/></svg></a>
-    <div class="contact">
-      <a href="tel:+33000000000"><svg class="ico"><use href="#i-phone"/></svg> Téléphone</a>
-      <a href="https://wa.me/33000000000"><svg class="ico"><use href="#i-whatsapp"/></svg> WhatsApp</a>
+    <p class="d">Laissez-nous vos coordonnées : nous vous recontactons pour fixer votre consultation et définir ensemble la teinte et la forme idéales.</p>
+
+    <!-- Formulaire de capture de leads.
+         Branchez l'attribut action sur votre service (Formspree, Brevo, CRM, e-mail…)
+         ou traitez l'événement 'submit' côté back-office. -->
+    <div class="lead-form" id="leadForm">
+      <form action="#" method="post" novalidate>
+        <div class="row">
+          <div class="field">
+            <label for="lf-nom">Nom &amp; prénom</label>
+            <input id="lf-nom" name="nom" type="text" autocomplete="name" placeholder="Votre nom" required />
+          </div>
+          <div class="field">
+            <label for="lf-tel">Téléphone</label>
+            <input id="lf-tel" name="telephone" type="tel" autocomplete="tel" placeholder="06 00 00 00 00" required />
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="lf-email">E-mail</label>
+            <input id="lf-email" name="email" type="email" autocomplete="email" placeholder="vous@email.com" required />
+          </div>
+          <div class="field">
+            <label for="lf-ville">Institut souhaité</label>
+            <select id="lf-ville" name="ville" required>
+              <option value="" disabled selected>Choisir une ville</option>
+              <option>Paris</option><option>Toulouse</option><option>Aix-en-Provence</option>
+              <option>Marseille</option><option>Nice</option><option>Cannes</option>
+              <option>Avignon</option><option>Ajaccio</option><option>Toulon</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="lf-presta">Prestation souhaitée</label>
+          <select id="lf-presta" name="prestation">
+            <option value="" disabled selected>Choisir une option</option>
+            <option>Naturel — effet « bonne mine »</option>
+            <option>Glamour 3D</option>
+            <option>Je ne sais pas encore, je souhaite être conseillée</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="lf-msg">Message (facultatif)</label>
+          <textarea id="lf-msg" name="message" placeholder="Vos disponibilités, vos questions…"></textarea>
+        </div>
+        <button type="submit" class="cta cta--light">Programmer votre consultation <svg class="ico"><use href="#i-arrow"/></svg></button>
+        <p class="form-consent">En envoyant ce formulaire, vous acceptez d'être recontactée par Studio Valéria Paul. Vos données ne sont jamais cédées à des tiers.</p>
+      </form>
+      <div class="form-ok">
+        <svg class="ico"><use href="#i-check"/></svg>
+        <h3>Merci !</h3>
+        <p>Votre demande a bien été enregistrée. Nous vous recontactons sous 24&nbsp;h pour fixer votre consultation.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -519,6 +590,23 @@
     var cur=parseFloat(ba.getAttribute('aria-valuenow'))||50;
     if(e.key==='ArrowLeft'){set(cur-5);e.preventDefault();}
     if(e.key==='ArrowRight'){set(cur+5);e.preventDefault();}
+  });
+})();
+
+/* Formulaire de leads : validation + confirmation.
+   Remplacez le bloc 'TODO envoi' par votre appel (fetch vers Formspree/CRM/API). */
+(function(){
+  var wrap=document.getElementById('leadForm');
+  if(!wrap) return;
+  var form=wrap.querySelector('form');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!form.checkValidity()){form.reportValidity();return;}
+    var data=Object.fromEntries(new FormData(form).entries());
+    /* TODO envoi : ex. fetch('https://formspree.io/f/xxxx',{method:'POST',body:new FormData(form)}) */
+    console.log('Nouveau lead :',data);
+    wrap.classList.add('sent');
+    wrap.scrollIntoView({behavior:'smooth',block:'center'});
   });
 })();
 </script>
