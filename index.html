@@ -319,6 +319,25 @@
   .lead-form.sent .form-ok{display:block}
   @media(max-width:560px){.lead-form .row{grid-template-columns:1fr}.lead-form{padding:26px 20px}}
 
+  /* AUTORITÉ — Problème vs Solution */
+  .autorite{background:var(--nude)}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  .vs-card{border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 14px 44px rgba(21,17,14,.06);
+    display:flex;flex-direction:column}
+  .vs-card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+  .vs-body{padding:28px 30px 32px}
+  .vs-tag{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;font-weight:600;padding:7px 14px;border-radius:30px;margin-bottom:16px}
+  .vs-tag .ico{width:15px;height:15px;stroke-width:2.6}
+  .vs-tag--bad{background:#f2ded9;color:#a8463a}
+  .vs-tag--good{background:#e4ece2;color:#5e7a59}
+  .vs-card--prob{border:1px solid #ecd4ce}
+  .vs-card--sol{border:1px solid #d8e3d6}
+  .vs-card h3{font-size:1.38rem;margin-bottom:12px}
+  .vs-card p{color:var(--gris);font-size:.97rem}
+  .vs-card p b{color:var(--noir)}
+  @media(max-width:780px){.vs{grid-template-columns:1fr}}
+
   /* BARRE DE SCROLL — lèvres aquarelle */
   .scrollnav{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:60;
     height:42vh;max-height:360px;display:flex;align-items:stretch}
@@ -513,6 +532,36 @@
       <button class="mphoto" type="button"><img src="assets/img/gallery/07.jpg" alt="Sourire après lip blush" loading="lazy"><span class="zoom"><svg class="ico"><use href="#i-zoom"/></svg></span></button>
       <button class="mphoto" type="button"><img src="assets/img/gallery/08.jpg" alt="Avant / après lèvres redessinées" loading="lazy"><span class="zoom"><svg class="ico"><use href="#i-zoom"/></svg></span></button>
     </div>
+  </div>
+</section>
+
+<!-- ============ AUTORITÉ — Problème vs Solution ============ -->
+<section class="autorite" id="difference">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">L'exigence Valéria Paul</p>
+      <h2>Ce que personne ne vous montre sur le maquillage des lèvres</h2>
+      <p>Le résultat dépend entièrement de la main qui le réalise. Choisir le mauvais salon, c'est risquer de vivre des mois avec une bouche qui ne vous ressemble pas. Voici la différence.</p>
+    </div>
+    <div class="vs">
+      <div class="vs-card vs-card--prob">
+        <img src="assets/img/clown.jpg" alt="Lèvres sur-dessinées, effet clown" loading="lazy">
+        <div class="vs-body">
+          <span class="vs-tag vs-tag--bad"><svg class="ico"><use href="#i-close"/></svg> Ce qu'on voit trop souvent</span>
+          <h3>Le Problème : l'effet « Clown ».</h3>
+          <p><b>La cause :</b> des lèvres artificiellement sur-dessinées, où la couleur dépasse la ligne naturelle du contour. Un résultat figé qui vieillit mal pendant des mois.</p>
+        </div>
+      </div>
+      <div class="vs-card vs-card--sol">
+        <img src="assets/img/bonne-mine.jpg" alt="Lèvres au contour naturel, effet bonne mine" loading="lazy">
+        <div class="vs-body">
+          <span class="vs-tag vs-tag--good"><svg class="ico"><use href="#i-check"/></svg> L'exigence Valéria Paul</span>
+          <h3>La Solution : l'illusion « Bonne Mine ».</h3>
+          <p><b>La technique :</b> un rehaussement de votre couleur avec des pigments biodégradables, dans le strict respect du contour naturel — pour un effet fondu et une bouche fraîche dès le réveil.</p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-cta"><a href="#consultation" class="cta">Programmer votre consultation <svg class="ico"><use href="#i-arrow"/></svg></a></div>
   </div>
 </section>
 
