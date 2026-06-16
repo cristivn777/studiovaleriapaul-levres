@@ -326,15 +326,17 @@
   .lipconf__stage{position:relative;border-radius:18px;overflow:hidden;
     box-shadow:0 22px 56px rgba(21,17,14,.16)}
   .lipconf__base{width:100%;display:block}
-  .lipconf__tint{position:absolute;inset:0;mix-blend-mode:multiply;
+  .lipconf__tint{position:absolute;inset:0;
     -webkit-mask:url(assets/img/config-mask.png) center/100% 100% no-repeat;
     mask:url(assets/img/config-mask.png) center/100% 100% no-repeat;
-    background:var(--lc-color,#cf7d72);opacity:var(--lc-int,.46);
+    background:var(--lc-color,#cf7d72);opacity:var(--lc-int,.7);
     transition:background .35s ease,opacity .2s ease}
+  .lipconf__tex{position:absolute;inset:0;mix-blend-mode:multiply;pointer-events:none;
+    background:url(assets/img/config-tex.png) center/100% 100% no-repeat}
   .lipconf__gloss{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;
     -webkit-mask:url(assets/img/config-mask.png) center/100% 100% no-repeat;
     mask:url(assets/img/config-mask.png) center/100% 100% no-repeat;
-    background:radial-gradient(ellipse 40% 24% at 42% 60%,rgba(255,255,255,.6),transparent 70%);
+    background:radial-gradient(ellipse 34% 16% at 50% 66%,rgba(255,255,255,.55),transparent 70%);
     opacity:var(--lc-gloss,0);transition:opacity .3s ease}
   .lipconf__ctrl h3{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:10px}
   .lipconf__ctrl>p{color:var(--gris);margin-bottom:22px}
@@ -764,6 +766,7 @@
       <div class="lipconf__stage">
         <img class="lipconf__base" src="assets/img/config-base.jpg" alt="Aperçu du rendu des lèvres" />
         <div class="lipconf__tint" id="lcTint"></div>
+        <div class="lipconf__tex"></div>
         <div class="lipconf__gloss" id="lcGloss"></div>
       </div>
       <div class="lipconf__ctrl">
@@ -1031,8 +1034,8 @@
   function apply(){
     var v=+range.value;
     tint.style.setProperty('--lc-color',color);
-    tint.style.setProperty('--lc-int',(0.16+v/100*0.72).toFixed(3));
-    gloss.style.setProperty('--lc-gloss',(v/100*0.9).toFixed(2));
+    tint.style.setProperty('--lc-int',(0.45+v/100*0.47).toFixed(3));
+    gloss.style.setProperty('--lc-gloss',(v/100*0.8).toFixed(2));
     readout.innerHTML='<b>'+name+'</b> · effet '+level(v);
   }
   sw.addEventListener('click',function(e){
