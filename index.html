@@ -104,6 +104,26 @@
   .gal-item::after{content:"";position:absolute;inset:0;
     background:linear-gradient(to top,rgba(21,17,14,.6),transparent 55%)}
 
+  /* AVANT / APRÈS INTERACTIF */
+  .ba{max-width:760px;margin:0 auto 56px;position:relative;border-radius:16px;overflow:hidden;
+    aspect-ratio:4/3;box-shadow:0 26px 64px rgba(21,17,14,.18);
+    user-select:none;-webkit-user-select:none;touch-action:none;cursor:ew-resize}
+  .ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+  .ba__after{clip-path:inset(0 0 0 var(--pos,50%))}
+  .ba__before{clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
+  .ba__lbl{position:absolute;top:16px;z-index:4;padding:7px 16px;border-radius:30px;
+    font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;font-weight:600;
+    background:rgba(21,17,14,.62);color:#fff;backdrop-filter:blur(4px)}
+  .ba__lbl--a{left:16px}.ba__lbl--b{right:16px}
+  .ba__line{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;background:#fff;z-index:5;transform:translateX(-1px)}
+  .ba__grip{position:absolute;top:50%;left:var(--pos,50%);z-index:6;transform:translate(-50%,-50%);
+    width:46px;height:46px;border-radius:50%;background:#fff;color:var(--noir);
+    display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+  .ba__grip .ico{width:24px;height:24px}
+  .ba__hint{text-align:center;color:var(--gris);font-size:.88rem;margin:-34px auto 56px;
+    display:flex;align-items:center;justify-content:center;gap:8px}
+  .ba__hint .ico{width:18px;height:18px;color:var(--terracotta)}
+
   /* SERVICE */
   .service .lead{font-size:1.12rem;color:var(--gris);max-width:760px;margin:0 auto 8px;text-align:center}
   .options{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:46px}
@@ -242,6 +262,7 @@
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 6"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-7 9-7 9s-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-drag" viewBox="0 0 24 24"><path d="M9 7l-4 5 4 5M15 7l4 5-4 5"/></symbol>
 </svg>
 
 <!-- ============ NAV ============ -->
@@ -310,6 +331,18 @@
       <h2>Le résultat, en images</h2>
       <p>Des rendus réels, en lumière naturelle, du plus discret au plus glamour.</p>
     </div>
+
+    <!-- Comparateur interactif avant / après -->
+    <div class="ba" id="ba" role="slider" aria-label="Comparateur avant / après" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0" style="--pos:50%">
+      <img class="ba__before" src="assets/img/avant.jpg" alt="Lèvres avant le maquillage semi-permanent" />
+      <img class="ba__after" src="assets/img/apres.jpg" alt="Lèvres après le maquillage semi-permanent lip blush" />
+      <span class="ba__lbl ba__lbl--a">Avant</span>
+      <span class="ba__lbl ba__lbl--b">Après</span>
+      <div class="ba__line"></div>
+      <div class="ba__grip"><svg class="ico"><use href="#i-drag"/></svg></div>
+    </div>
+    <p class="ba__hint"><svg class="ico"><use href="#i-drag"/></svg> Glissez pour comparer le résultat</p>
+
     <div class="gal-grid">
       <div class="gal-item"><img src="assets/img/natural.jpg" alt="Lèvres naturelles effet bonne mine"><span>Naturel · effet bonne mine</span></div>
       <div class="gal-item"><img src="assets/img/g2.jpg" alt="Lèvres lumineuses contour redessiné"><span>Couleur ravivée</span></div>
@@ -462,6 +495,33 @@
   <svg class="nav__logo"><use href="#brandLogo"/></svg>
   <p>Studio Valéria Paul — Maquillage semi-permanent des lèvres</p>
 </footer>
+
+<script>
+(function(){
+  var ba=document.getElementById('ba');
+  if(!ba) return;
+  function set(pct){
+    pct=Math.max(0,Math.min(100,pct));
+    ba.style.setProperty('--pos',pct+'%');
+    ba.setAttribute('aria-valuenow',Math.round(pct));
+  }
+  function fromEvent(e){
+    var r=ba.getBoundingClientRect();
+    var x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
+    set(x/r.width*100);
+  }
+  var dragging=false;
+  ba.addEventListener('pointerdown',function(e){dragging=true;ba.setPointerCapture(e.pointerId);fromEvent(e);});
+  ba.addEventListener('pointermove',function(e){if(dragging)fromEvent(e);});
+  ba.addEventListener('pointerup',function(){dragging=false;});
+  ba.addEventListener('pointercancel',function(){dragging=false;});
+  ba.addEventListener('keydown',function(e){
+    var cur=parseFloat(ba.getAttribute('aria-valuenow'))||50;
+    if(e.key==='ArrowLeft'){set(cur-5);e.preventDefault();}
+    if(e.key==='ArrowRight'){set(cur+5);e.preventDefault();}
+  });
+})();
+</script>
 
 </body>
 </html>
