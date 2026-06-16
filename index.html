@@ -328,7 +328,18 @@
     filter:drop-shadow(0 5px 9px rgba(143,74,64,.4));transition:transform .15s ease}
   .scrollnav__lips:hover{transform:translate(-50%,-50%) scale(1.12)}
   .scrollnav__lips:active{transform:translate(-50%,-50%) scale(.96)}
-  .scrollnav__lips svg{width:100%;height:auto;display:block}
+  .scrollnav__lips img{width:100%;height:auto;display:block;-webkit-user-drag:none;user-select:none}
+  /* Inimioare emise la scroll */
+  .heart{position:absolute;right:2px;width:16px;height:16px;color:var(--terracotta);
+    pointer-events:none;z-index:59;opacity:0;animation:heartfly 1.7s ease-out forwards}
+  .heart svg{width:100%;height:100%;fill:currentColor;
+    filter:drop-shadow(0 2px 4px rgba(181,107,94,.4))}
+  @keyframes heartfly{
+    0%{opacity:0;transform:translate(0,0) scale(.3) rotate(0deg)}
+    18%{opacity:.95}
+    100%{opacity:0;transform:translate(var(--hx,-60px),-78px) scale(var(--hs,1)) rotate(var(--hr,-12deg))}
+  }
+  @media(prefers-reduced-motion:reduce){.heart{display:none}}
   .scrollnav__hint{position:absolute;right:60px;top:50%;transform:translateY(-50%);
     white-space:nowrap;background:var(--noir);color:#fff;font-size:.7rem;letter-spacing:.1em;
     padding:8px 12px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -708,27 +719,7 @@
   <div class="scrollnav__track" id="snTrack">
     <div class="scrollnav__fill" id="snFill"></div>
     <button class="scrollnav__lips" id="snLips" type="button" aria-label="Lèvre du haut : monter d'une section — Lèvre du bas : descendre d'une section">
-      <svg viewBox="0 0 100 78" aria-hidden="true">
-        <defs>
-          <radialGradient id="wcGrad" cx="50%" cy="42%" r="68%">
-            <stop offset="0%" stop-color="#e3a99e"/>
-            <stop offset="48%" stop-color="#c07a6d"/>
-            <stop offset="100%" stop-color="#8f4a40"/>
-          </radialGradient>
-          <filter id="wcRough" x="-30%" y="-30%" width="160%" height="160%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="7" result="n"/>
-            <feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/>
-            <feGaussianBlur stdDeviation="0.5"/>
-          </filter>
-        </defs>
-        <g filter="url(#wcRough)">
-          <ellipse cx="50" cy="42" rx="45" ry="27" fill="#c98a82" opacity=".28"/>
-          <path d="M6,38 C16,28 26,28 36,33 C42,36 46,30 50,26 C54,30 58,36 64,33 C74,28 84,28 94,38 C84,41 60,44 50,44 C40,44 16,41 6,38 Z" fill="url(#wcGrad)"/>
-          <path d="M6,38 C20,42 40,45 50,45 C60,45 80,42 94,38 C86,57 68,72 50,72 C32,72 14,57 6,38 Z" fill="url(#wcGrad)"/>
-          <path d="M12,39 C30,45 70,45 88,39" fill="none" stroke="#6e352e" stroke-width="2.2" stroke-linecap="round" opacity=".5"/>
-          <path d="M30,33 C40,30 60,30 70,33" fill="none" stroke="#f3d9d2" stroke-width="1.4" stroke-linecap="round" opacity=".35"/>
-        </g>
-      </svg>
+      <img src="assets/img/lips-watercolor.png" alt="" />
     </button>
     <span class="scrollnav__hint">Haut / Bas</span>
   </div>
@@ -868,7 +859,27 @@
     var r=track.getBoundingClientRect();
     window.scrollTo({top:((e.clientY-r.top)/r.height)*max(),behavior:'smooth'});
   });
-  window.addEventListener('scroll',update,{passive:true});
+  // Inimioare emise de pe buze la scroll
+  var HEART='<svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.5-9C1 9 2.6 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.4 0 5 3.5 3.5 6.5C19 16.4 12 21 12 21z"/></svg>';
+  var last=0, reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function heart(){
+    var p=Math.min(1,Math.max(0,window.scrollY/max()));
+    var el=document.createElement('span');
+    el.className='heart'; el.innerHTML=HEART;
+    el.style.top=(p*100)+'%';
+    el.style.setProperty('--hx',(-35-Math.random()*65)+'px');
+    el.style.setProperty('--hr',(Math.random()*40-20)+'deg');
+    el.style.setProperty('--hs',(0.7+Math.random()*0.7).toFixed(2));
+    nav.appendChild(el);
+    el.addEventListener('animationend',function(){el.remove();});
+  }
+  function onScroll(){
+    update();
+    if(reduce) return;
+    var now=Date.now();
+    if(now-last>140){ last=now; heart(); }
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
   window.addEventListener('resize',update);
   update();
 })();
