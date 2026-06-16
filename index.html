@@ -319,6 +319,47 @@
   .lead-form.sent .form-ok{display:block}
   @media(max-width:560px){.lead-form .row{grid-template-columns:1fr}.lead-form{padding:26px 20px}}
 
+  /* CONFIGURATEUR DE LÈVRES */
+  .lipconf-band{background:var(--creme)}
+  .lipconf{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+    max-width:980px;margin:0 auto}
+  .lipconf__stage{position:relative;border-radius:18px;overflow:hidden;
+    box-shadow:0 22px 56px rgba(21,17,14,.16)}
+  .lipconf__base{width:100%;display:block}
+  .lipconf__tint{position:absolute;inset:0;mix-blend-mode:multiply;
+    -webkit-mask:url(assets/img/config-mask.png) center/100% 100% no-repeat;
+    mask:url(assets/img/config-mask.png) center/100% 100% no-repeat;
+    background:var(--lc-color,#cf7d72);opacity:var(--lc-int,.46);
+    transition:background .35s ease,opacity .2s ease}
+  .lipconf__gloss{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;
+    -webkit-mask:url(assets/img/config-mask.png) center/100% 100% no-repeat;
+    mask:url(assets/img/config-mask.png) center/100% 100% no-repeat;
+    background:radial-gradient(ellipse 40% 24% at 42% 60%,rgba(255,255,255,.6),transparent 70%);
+    opacity:var(--lc-gloss,0);transition:opacity .3s ease}
+  .lipconf__ctrl h3{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:10px}
+  .lipconf__ctrl>p{color:var(--gris);margin-bottom:22px}
+  .lc-label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;
+    color:var(--terracotta);font-weight:600;margin:0 0 12px}
+  .lc-swatches{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+  .lc-sw{display:flex;align-items:center;gap:8px;border:1px solid var(--bord);background:#fff;
+    border-radius:30px;padding:7px 14px 7px 8px;cursor:pointer;font-size:.84rem;color:var(--noir);
+    transition:border-color .2s,transform .15s}
+  .lc-sw:hover{transform:translateY(-1px)}
+  .lc-sw .dot{width:18px;height:18px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.08) inset}
+  .lc-sw.active{border-color:var(--terracotta);box-shadow:0 0 0 1px var(--terracotta)}
+  .lc-slider{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+  .lc-slider small{font-size:.72rem;color:var(--gris);white-space:nowrap}
+  input.lc-range{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:6px;
+    background:linear-gradient(90deg,var(--rose-clair),var(--terracotta));outline:none}
+  input.lc-range::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+    background:#fff;border:2px solid var(--terracotta);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+  input.lc-range::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;
+    border:2px solid var(--terracotta);cursor:pointer}
+  .lc-readout{font-family:Georgia,serif;font-size:1.05rem;margin:14px 0 22px;color:var(--noir)}
+  .lc-readout b{color:var(--terracotta)}
+  @media(max-width:820px){.lipconf{grid-template-columns:1fr;gap:28px}
+    .lipconf__stage{max-width:420px;margin:0 auto}}
+
   /* AUTORITÉ — Problème vs Solution */
   .autorite{background:var(--nude)}
   .vs{display:grid;grid-template-columns:1fr 1fr;gap:26px}
@@ -711,6 +752,44 @@
   </div>
 </section>
 
+<!-- ============ CONFIGURATEUR DE LÈVRES (mini-jeu) ============ -->
+<section class="lipconf-band" id="configurateur">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Composez votre rendu</p>
+      <h2>Essayez votre teinte, en un geste</h2>
+      <p>Choisissez une couleur et son intensité, du plus naturel au plus glamour, et visualisez le résultat en direct.</p>
+    </div>
+    <div class="lipconf">
+      <div class="lipconf__stage">
+        <img class="lipconf__base" src="assets/img/config-base.jpg" alt="Aperçu du rendu des lèvres" />
+        <div class="lipconf__tint" id="lcTint"></div>
+        <div class="lipconf__gloss" id="lcGloss"></div>
+      </div>
+      <div class="lipconf__ctrl">
+        <h3>Votre bouche, sur-mesure</h3>
+        <p>Un aperçu indicatif — votre teinte définitive est choisie ensemble lors de la consultation.</p>
+        <span class="lc-label">La teinte</span>
+        <div class="lc-swatches" id="lcSwatches">
+          <button type="button" class="lc-sw active" data-color="#cf7d72" data-name="Rosé Bonne Mine"><span class="dot" style="background:#cf7d72"></span>Rosé Bonne Mine</button>
+          <button type="button" class="lc-sw" data-color="#d9745c" data-name="Corail"><span class="dot" style="background:#d9745c"></span>Corail</button>
+          <button type="button" class="lc-sw" data-color="#c06a73" data-name="Vieux Rose"><span class="dot" style="background:#c06a73"></span>Vieux Rose</button>
+          <button type="button" class="lc-sw" data-color="#b23b4e" data-name="Cerise"><span class="dot" style="background:#b23b4e"></span>Cerise</button>
+          <button type="button" class="lc-sw" data-color="#cf8e7e" data-name="Nude Pêche"><span class="dot" style="background:#cf8e7e"></span>Nude Pêche</button>
+        </div>
+        <span class="lc-label">L'intensité</span>
+        <div class="lc-slider">
+          <small>Naturel</small>
+          <input type="range" class="lc-range" id="lcRange" min="0" max="100" value="45" aria-label="Intensité de la teinte">
+          <small>Glamour</small>
+        </div>
+        <p class="lc-readout" id="lcReadout"><b>Rosé Bonne Mine</b> · effet Naturel</p>
+        <a href="#consultation" class="cta">Réservez ce rendu <svg class="ico"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ 9. PRIX & CTA ============ -->
 <section class="prix" id="consultation">
   <div class="container">
@@ -936,6 +1015,33 @@
   window.addEventListener('scroll',onScroll,{passive:true});
   window.addEventListener('resize',update);
   update();
+})();
+
+/* Configurateur de lèvres */
+(function(){
+  var stage=document.getElementById('lcTint');
+  if(!stage) return;
+  var tint=document.getElementById('lcTint'),
+      gloss=document.getElementById('lcGloss'),
+      range=document.getElementById('lcRange'),
+      readout=document.getElementById('lcReadout'),
+      sw=document.getElementById('lcSwatches');
+  var color='#cf7d72', name='Rosé Bonne Mine';
+  function level(v){return v<34?'Naturel':(v<67?'Intense':'Glamour 3D');}
+  function apply(){
+    var v=+range.value;
+    tint.style.setProperty('--lc-color',color);
+    tint.style.setProperty('--lc-int',(0.16+v/100*0.72).toFixed(3));
+    gloss.style.setProperty('--lc-gloss',(v/100*0.9).toFixed(2));
+    readout.innerHTML='<b>'+name+'</b> · effet '+level(v);
+  }
+  sw.addEventListener('click',function(e){
+    var b=e.target.closest('.lc-sw'); if(!b) return;
+    sw.querySelectorAll('.lc-sw').forEach(function(x){x.classList.remove('active');});
+    b.classList.add('active'); color=b.dataset.color; name=b.dataset.name; apply();
+  });
+  range.addEventListener('input',apply);
+  apply();
 })();
 </script>
 
