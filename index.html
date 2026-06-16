@@ -61,9 +61,22 @@
     min-height:84vh;padding:60px 0}
   .hero h1{font-size:clamp(2.4rem,5.4vw,4rem);margin-bottom:22px}
   .hero p.sub{font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--gris);max-width:520px;margin-bottom:34px}
-  .hero__img{position:relative;border-radius:200px 200px 18px 18px;overflow:hidden;
-    aspect-ratio:4/5;box-shadow:0 30px 70px rgba(21,17,14,.18)}
-  .hero__img img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero__img{position:relative;aspect-ratio:4/5}
+  .hero__photo{position:relative;width:100%;height:100%;border-radius:24px;overflow:hidden;
+    box-shadow:0 30px 70px rgba(21,17,14,.18)}
+  .hero__photo img{width:100%;height:100%;object-fit:cover;object-position:50% 28%;display:block}
+  /* Animation : bisous qui s'envolent depuis les lèvres */
+  .kiss{position:absolute;left:50%;top:72%;z-index:4;pointer-events:none}
+  .kiss .k{position:absolute;left:-15px;top:-15px;width:30px;height:30px;color:var(--terracotta);
+    opacity:0;animation:kissfloat 5s ease-in infinite}
+  .kiss .k svg{width:100%;height:100%;fill:currentColor;
+    filter:drop-shadow(0 4px 7px rgba(181,107,94,.45))}
+  @keyframes kissfloat{
+    0%{opacity:0;transform:translate(0,0) scale(.3) rotate(0deg)}
+    14%{opacity:.95;transform:translate(calc(var(--dx,0px)*.12),-22px) scale(.7) rotate(calc(var(--rot,0deg)*.3))}
+    100%{opacity:0;transform:translate(var(--dx,0px),-270px) scale(var(--sc,1.1)) rotate(var(--rot,0deg))}
+  }
+  @media(prefers-reduced-motion:reduce){.kiss{display:none}}
   .hero__rating{display:flex;align-items:center;gap:14px;margin-top:30px;flex-wrap:wrap}
   .stars{display:inline-flex;gap:2px;color:var(--or)}
   .stars .ico{fill:var(--or);stroke:var(--or);width:18px;height:18px}
@@ -196,21 +209,30 @@
   .rating-summary .src{color:var(--gris);font-size:.9rem;margin-top:4px}
   .vline{width:1px;height:54px;background:var(--bord)}
 
-  /* Vidéo témoignage — mock-up iPhone */
-  .video-temoignage{display:flex;flex-direction:column;align-items:center;margin-bottom:50px}
-  .phone{position:relative;width:280px;max-width:78vw;aspect-ratio:9/19.5;background:#0e0b09;
-    border-radius:46px;padding:12px;box-shadow:0 30px 70px rgba(21,17,14,.28),0 0 0 2px #2a2421 inset}
-  .phone::before{content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);z-index:3;
-    width:96px;height:26px;background:#0e0b09;border-radius:0 0 16px 16px}
-  .phone::after{content:"";position:absolute;right:-3px;top:120px;width:3px;height:54px;
+  /* Vidéo témoignage — mock-up iPhone intégré avec texte */
+  .video-temoignage{display:grid;grid-template-columns:1fr 230px;gap:54px;align-items:center;
+    max-width:860px;margin:0 auto 56px}
+  .vt-text .eyebrow{margin-bottom:14px}
+  .vt-text h3{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:16px;line-height:1.25}
+  .vt-text p{color:var(--gris);margin-bottom:18px}
+  .vt-text .who{display:flex;align-items:center;gap:12px;margin-top:6px}
+  .vt-text .who .av{width:42px;height:42px;border-radius:50%;background:var(--rose-clair);color:var(--terracotta);
+    display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:1.05rem}
+  .vt-text .who b{display:block;font-size:.92rem}.vt-text .who small{color:var(--gris);font-size:.8rem}
+  .vt-text .stars{margin-bottom:10px}.vt-text .stars .ico{width:16px;height:16px}
+  .phone{position:relative;width:230px;justify-self:center;aspect-ratio:9/18;background:#0e0b09;
+    border-radius:40px;padding:10px;box-shadow:0 26px 60px rgba(21,17,14,.26),0 0 0 2px #2a2421 inset}
+  .phone::before{content:"";position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:3;
+    width:80px;height:22px;background:#0e0b09;border-radius:0 0 14px 14px}
+  .phone::after{content:"";position:absolute;right:-3px;top:100px;width:3px;height:46px;
     background:#2a2421;border-radius:2px}
-  .phone .screen{width:100%;height:100%;border-radius:34px;overflow:hidden;background:#000;position:relative}
+  .phone .screen{width:100%;height:100%;border-radius:30px;overflow:hidden;background:#000;position:relative}
   .phone video{width:100%;height:100%;object-fit:cover;display:block}
-  .phone .sound{position:absolute;bottom:14px;right:14px;z-index:4;width:40px;height:40px;border-radius:50%;
-    border:none;cursor:pointer;background:rgba(0,0,0,.5);color:#fff;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-  .phone .sound .ico{width:20px;height:20px}
-  .video-temoignage .cap{margin-top:20px;color:var(--gris);font-size:.92rem;display:flex;align-items:center;gap:8px}
-  .video-temoignage .cap .ico{width:18px;height:18px;color:var(--terracotta)}
+  .phone .sound{position:absolute;bottom:12px;right:12px;z-index:4;width:38px;height:38px;border-radius:50%;
+    border:none;cursor:pointer;background:rgba(0,0,0,.55);color:#fff;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+  .phone .sound .ico{width:19px;height:19px}
+  @media(max-width:720px){.video-temoignage{grid-template-columns:1fr;gap:30px;text-align:center}
+    .vt-text .who{justify-content:center}.vt-text .stars{justify-content:center;display:flex}}
 
   /* Avis scrollables (carrousel horizontal) */
   .avis-scroll{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;
@@ -350,6 +372,7 @@
   <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9h3l5-4v14l-5-4H4z"/><path d="M16 9l5 6M21 9l-5 6"/></symbol>
   <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9h3l5-4v14l-5-4H4z"/><path d="M16 8a5 5 0 0 1 0 8M18.5 6a8 8 0 0 1 0 12"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-kiss" viewBox="0 0 24 24"><path d="M12 8.2C10.6 6.3 8.2 5.6 6.3 6.2 4.9 6.6 4.6 7.7 5.6 8.4 4.4 8.6 4.2 9.7 5.2 10.6 6.7 12 9.4 13.4 12 14.4 14.6 13.4 17.3 12 18.8 10.6 19.8 9.7 19.6 8.6 18.4 8.4 19.4 7.7 19.1 6.6 17.7 6.2 15.8 5.6 13.4 6.3 12 8.2Z" fill="currentColor" stroke="none"/></symbol>
 </svg>
 
 <!-- ============ NAV ============ -->
@@ -376,7 +399,17 @@
           <small><strong>4,9/5</strong> · plus de 1 200 avis clientes · Champion National 2024 &amp; 2025</small>
         </div>
       </div>
-      <div class="hero__img"><img src="assets/img/hero.jpg" alt="Cliente au sourire naturel après un maquillage semi-permanent des lèvres lip blush" /></div>
+      <div class="hero__img">
+        <div class="hero__photo"><img src="assets/img/hero.jpg" alt="Cliente au sourire naturel après un maquillage semi-permanent des lèvres lip blush" /></div>
+        <div class="kiss" aria-hidden="true">
+          <span class="k" style="--dx:-72px;--rot:-18deg;--sc:1.1;animation-delay:0s;animation-duration:5s"><svg><use href="#i-kiss"/></svg></span>
+          <span class="k" style="--dx:64px;--rot:16deg;--sc:1.25;animation-delay:.9s;animation-duration:5.6s"><svg><use href="#i-kiss"/></svg></span>
+          <span class="k" style="--dx:-118px;--rot:-9deg;--sc:.85;animation-delay:1.7s;animation-duration:6s"><svg><use href="#i-kiss"/></svg></span>
+          <span class="k" style="--dx:104px;--rot:24deg;--sc:1;animation-delay:2.5s;animation-duration:5.2s"><svg><use href="#i-kiss"/></svg></span>
+          <span class="k" style="--dx:-28px;--rot:-6deg;--sc:1.3;animation-delay:3.3s;animation-duration:5.8s"><svg><use href="#i-kiss"/></svg></span>
+          <span class="k" style="--dx:44px;--rot:12deg;--sc:.95;animation-delay:4.1s;animation-duration:5.4s"><svg><use href="#i-kiss"/></svg></span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -518,18 +551,23 @@
       </div>
     </div>
 
-    <!-- Vidéo témoignage dans un mock-up iPhone -->
+    <!-- Vidéo témoignage : texte + mock-up iPhone -->
     <div class="video-temoignage">
+      <div class="vt-text">
+        <p class="eyebrow">Témoignage en vidéo</p>
+        <span class="stars"><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg><svg class="ico"><use href="#i-star"/></svg></span>
+        <h3>« Franchement, le résultat a dépassé mes attentes. »</h3>
+        <p>Nos clientes racontent leur expérience, de la consultation au résultat final. Touchez la vidéo pour activer le son.</p>
+        <div class="who"><div class="av">V</div><div><b>Cliente Studio Valéria Paul</b><small>Maquillage des lèvres</small></div></div>
+      </div>
       <div class="phone">
         <div class="screen">
           <video id="vTemo" playsinline muted loop autoplay preload="metadata" poster="assets/img/temoignage-poster.jpg">
-            <source src="assets/video/temoignage.webm" type="video/webm">
             <source src="assets/video/temoignage.mp4" type="video/mp4">
           </video>
           <button class="sound" id="vSound" type="button" aria-label="Activer le son"><svg class="ico"><use href="#i-mute"/></svg></button>
         </div>
       </div>
-      <p class="cap"><svg class="ico"><use href="#i-play"/></svg> Témoignage en vidéo · touchez pour activer le son</p>
     </div>
 
     <div class="avis-scroll">
