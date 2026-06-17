@@ -311,6 +311,7 @@
   .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--rose)}
   .lead-form .cta{width:100%;justify-content:center;margin-top:6px}
   .form-consent{font-size:.78rem;color:#bcaea8;margin-top:14px;text-align:center}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
   .form-ok{display:none;text-align:center;padding:30px 10px}
   .form-ok .ico{width:54px;height:54px;color:var(--rose);margin-bottom:14px}
   .form-ok h3{color:#fff;font-size:1.5rem;margin-bottom:8px}
@@ -851,6 +852,7 @@
           <label for="lf-msg">Message (facultatif)</label>
           <textarea id="lf-msg" name="message" placeholder="Vos disponibilités, vos questions…"></textarea>
         </div>
+        <div class="hp" aria-hidden="true"><label>Ne pas remplir<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
         <button type="submit" class="cta cta--light">Programmer votre consultation <svg class="ico"><use href="#i-arrow"/></svg></button>
         <p class="form-consent">En envoyant ce formulaire, vous acceptez d'être recontactée par Studio Valéria Paul. Vos données ne sont jamais cédées à des tiers.</p>
       </form>
@@ -920,14 +922,27 @@
   var wrap=document.getElementById('leadForm');
   if(!wrap) return;
   var form=wrap.querySelector('form');
+  var HOOK='https://hooks.zapier.com/hooks/catch/18421979/43et2xu/';
   form.addEventListener('submit',function(e){
     e.preventDefault();
     if(!form.checkValidity()){form.reportValidity();return;}
-    var data=Object.fromEntries(new FormData(form).entries());
-    /* TODO envoi : ex. fetch('https://formspree.io/f/xxxx',{method:'POST',body:new FormData(form)}) */
-    console.log('Nouveau lead :',data);
-    wrap.classList.add('sent');
-    wrap.scrollIntoView({behavior:'smooth',block:'center'});
+    if(form.company && form.company.value){return;} /* honeypot : bot détecté */
+    var btn=form.querySelector('button[type=submit]'), old=btn.innerHTML;
+    btn.disabled=true; btn.textContent='Envoi…';
+    var data=new URLSearchParams();
+    new FormData(form).forEach(function(v,k){ if(k!=='company') data.append(k,v); });
+    data.append('source','Landing Page Lèvres');
+    data.append('page',location.href);
+    data.append('date',new Date().toISOString());
+    fetch(HOOK,{method:'POST',body:data})
+      .then(function(){
+        wrap.classList.add('sent');
+        wrap.scrollIntoView({behavior:'smooth',block:'center'});
+      })
+      .catch(function(){
+        btn.disabled=false; btn.innerHTML=old;
+        alert('Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone.');
+      });
   });
 })();
 
