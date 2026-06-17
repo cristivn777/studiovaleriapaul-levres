@@ -830,27 +830,20 @@
             <input id="lf-tel" name="telephone" type="tel" autocomplete="tel" placeholder="06 00 00 00 00" required />
           </div>
         </div>
-        <div class="field">
-            <label for="lf-ville">Institut souhaité</label>
-            <select id="lf-ville" name="ville" required>
-              <option value="" disabled selected>Choisir une ville</option>
+        <div class="row">
+          <div class="field">
+            <label for="lf-email">E-mail</label>
+            <input id="lf-email" name="email" type="email" autocomplete="email" placeholder="vous@email.com" required />
+          </div>
+          <div class="field">
+            <label for="lf-studio">Studio le plus proche</label>
+            <select id="lf-studio" name="studio" required>
+              <option value="" disabled selected>Choisir un studio</option>
               <option>Paris</option><option>Toulouse</option><option>Aix-en-Provence</option>
               <option>Marseille</option><option>Nice</option><option>Cannes</option>
               <option>Avignon</option><option>Ajaccio</option><option>Toulon</option>
             </select>
-        </div>
-        <div class="field">
-          <label for="lf-presta">Prestation souhaitée</label>
-          <select id="lf-presta" name="prestation">
-            <option value="" disabled selected>Choisir une option</option>
-            <option>Naturel — effet « bonne mine »</option>
-            <option>Glamour 3D</option>
-            <option>Je ne sais pas encore, je souhaite être conseillée</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="lf-msg">Message (facultatif)</label>
-          <textarea id="lf-msg" name="message" placeholder="Vos disponibilités, vos questions…"></textarea>
+          </div>
         </div>
         <div class="hp" aria-hidden="true"><label>Ne pas remplir<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
         <button type="submit" class="cta cta--light">Programmer votre consultation <svg class="ico"><use href="#i-arrow"/></svg></button>
