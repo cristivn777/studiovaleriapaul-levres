@@ -514,18 +514,7 @@ src="https://www.facebook.com/tr?id=1406523847615532&ev=PageView&noscript=1"/></
 </svg>
 
 <!-- ============ 1. NAV ============ -->
-<header class="nav">
-  <div class="nav__in">
-    <a href="#hero" aria-label="Studio Valéria Paul"><svg class="nav__logo"><use href="#brandLogo"/></svg></a>
-    <nav style="display:flex;gap:1.8rem;align-items:center;font-size:.85rem;letter-spacing:.04em">
-      <a href="#galerie" style="color:var(--gris);text-decoration:none">Résultats</a>
-      <a href="#service" style="color:var(--gris);text-decoration:none">Prestation</a>
-      <a href="#avis" style="color:var(--gris);text-decoration:none">Avis</a>
-      <a href="#faq" style="color:var(--gris);text-decoration:none">FAQ</a>
-    </nav>
-    <a href="#consultation" class="cta nav__cta">Réserver ma consultation</a>
-  </div>
-</header>
+<!-- Nav removed in v2 — cleaner focus on content -->
 
 <!-- ============ 2. HERO ============ -->
 <section class="hero" id="hero">
@@ -1259,5 +1248,15 @@ src="https://www.facebook.com/tr?id=1406523847615532&ev=PageView&noscript=1"/></
   </div>
 </div>
 
+<script>
+document.addEventListener('click', function(e) {
+  var a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  var id = a.getAttribute('href').slice(1);
+  if (!id) return;
+  var target = document.getElementById(id);
+  if (target) { e.preventDefault(); target.scrollIntoView({behavior: 'smooth'}); }
+});
+</script>
 </body>
 </html>
